@@ -5,9 +5,6 @@ on:
     branches:
       - feature/task1-docker-labels-gh-actions
 
-env:
-  DOCKERFILE_LOCATION: '${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/$GITHUB_BRANCH/samples/dynamic-labels/Dockerfile'
-
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -35,7 +32,7 @@ jobs:
         tags: toddysm/tmstests:latest
         build-args: |
           IMAGE_COMMITTER=${{ github.actor }}
-          IMAGE_DOCKERFILE=${{ env.DOCKERFILE_LOCATION }}
+          IMAGE_DOCKERFILE=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/$GITHUB_REF/samples/dynamic-labels/Dockerfile
           IMAGE_COMMIT_SHA=${{ github.sha }}
 
     - name: Image digest
