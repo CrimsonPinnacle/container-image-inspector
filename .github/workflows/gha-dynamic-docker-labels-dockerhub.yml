@@ -1,15 +1,37 @@
+# This workflow will build and push a new container image to DockerHub. During the build
+# of the image the committer's GitHub handle, the commit SHA, and a link to the Dockerfile will be added
+# as labels to the image.
+#
+# To use this workflow, you will need to complete the following set-up steps:
+#
+# 1. Create a repository in DockerHub to store your container images. 
+#
+# 2. Store your DockerHub credentials (username and access token) in GitHub Actions secrets named `DOCKER_HUB_USERNAME` and `DOCKER_HUB_ACCESS_TOKEN`.
+#    For instructions on setting up secrets see: https://developer.github.com/actions/managing-workflows/storing-secrets/
+#
+# 3. Store your DockerHub repository name in GitHub Actions secret named `DOCKER_HUB_REPONAME`.
+#    For instructions on setting up secrets see: https://developer.github.com/actions/managing-workflows/storing-secrets/
+#
+# 4. Create a pull request or push to a development branch. 
+#
+
 name: Dynamic Docker Labels - DockerHub
 
 on:
   push:
     branches:
-      - feature/task1-docker-labels-gh-actions
+      - development
+  pull_request:
+    branches:
+      - development
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-    - name: 'Set Dockerfile environment variable'
+
+    # Builds the URL to the Dockerfile used to build the image
+    - name: 'Set environment variable for Dockerfile URL'
       run: echo "DOCKERFILE_URL=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/blob/${GITHUB_REF#refs/heads/}/samples/dynamic-labels/Dockerfile" >> $GITHUB_ENV
 
     - name: 'Checkout GitHub Action'
@@ -32,7 +54,7 @@ jobs:
         context: ./
         file: ./samples/dynamic-labels/Dockerfile
         push: true
-        tags: toddysm/tmstests:latest
+        tags: ${{ secrets.DOCKER_HUB_REPONAME }}:${{ github.run_number }}
         build-args: |
           IMAGE_COMMITTER=${{ github.actor }}
           IMAGE_DOCKERFILE=${{ env.DOCKERFILE_URL }}
