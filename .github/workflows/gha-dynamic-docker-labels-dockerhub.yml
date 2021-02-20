@@ -12,8 +12,8 @@ jobs:
     - name: 'Set Dockerfile environment variable'
       run: |
         echo "DOCKERFILE_URL=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/blob/${GITHUB_REF##*/}/samples/dynamic-labels/Dockerfile" >> $GITHUB_ENV
-        echo $GITHUB_ENV
-        echo $DOCKERFILE_URL
+        echo "${GITHUB_ENV}"
+        echo "${DOCKERFILE_URL}"
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@v2
     
