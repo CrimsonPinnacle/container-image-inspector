@@ -6,7 +6,7 @@ on:
       - feature/task1-docker-labels-gh-actions
 
 env:
-  DOCKERFILE_LOCATION: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/tree/$GITHUB_BASE_REF/samples/dynamic-labels/Dockerfile
+  DOCKERFILE_LOCATION: '$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/tree/$GITHUB_BASE_REF/samples/dynamic-labels/Dockerfile'
 
 jobs:
   build-and-push:
@@ -33,7 +33,13 @@ jobs:
         file: ./samples/dynamic-labels/Dockerfile
         push: true
         tags: toddysm/tmstests:latest
-        build-args: "IMAGE_COMMITTER=$GITHUB_ACTOR,IMAGE_DOCKERFILE=${{ env.DOCKERFILE_LOCATION }},IMAGE_COMMIT_SHA=$GITHUB_SHA"
+        build-args: 
+          - name: IMAGE_COMMITTER
+            value: ${{ github.actor }}
+          - name: IMAGE_DOCKERFILE
+            value: ${{ env.DOCKERFILE_LOCATION }}
+          - name: IMAGE_COMMIT_SHA
+            value: ${{ github.sha }}
 
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
