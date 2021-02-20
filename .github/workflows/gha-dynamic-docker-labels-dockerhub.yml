@@ -54,7 +54,7 @@ jobs:
         context: ./
         file: ./samples/dynamic-labels/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_REPONAME }}:${{ github.run_number }}
+        tags: ${{ secrets.DOCKER_HUB_REPONAME }}:V${{ github.run_number }}
         build-args: |
           IMAGE_COMMITTER=${{ github.actor }}
           IMAGE_DOCKERFILE=${{ env.DOCKERFILE_URL }}
