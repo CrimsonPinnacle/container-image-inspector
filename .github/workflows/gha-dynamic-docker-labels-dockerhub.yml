@@ -6,7 +6,7 @@ on:
       - feature/task1-docker-labels-gh-actions
 
 env:
-  DOCKERFILE_LOCATION: '$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/tree/$GITHUB_BASE_REF/samples/dynamic-labels/Dockerfile'
+  DOCKERFILE_LOCATION: '${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/$GITHUB_BRANCH/samples/dynamic-labels/Dockerfile'
 
 jobs:
   build-and-push:
