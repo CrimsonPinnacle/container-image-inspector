@@ -33,13 +33,10 @@ jobs:
         file: ./samples/dynamic-labels/Dockerfile
         push: true
         tags: toddysm/tmstests:latest
-        build-args: 
-          - name: IMAGE_COMMITTER
-            value: ${{ github.actor }}
-          - name: IMAGE_DOCKERFILE
-            value: ${{ env.DOCKERFILE_LOCATION }}
-          - name: IMAGE_COMMIT_SHA
-            value: ${{ github.sha }}
+        build-args: |
+          IMAGE_COMMITTER=${{ github.actor }}
+          IMAGE_DOCKERFILE=${{ env.DOCKERFILE_LOCATION }}
+          IMAGE_COMMIT_SHA=${{ github.sha }}
 
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
