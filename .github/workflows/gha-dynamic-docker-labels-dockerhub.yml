@@ -10,12 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 'Set Dockerfile environment variable'
-      run: |
-        echo "DOCKERFILE_URL=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/blob/${GITHUB_REF##*/}/samples/dynamic-labels/Dockerfile" >> $GITHUB_ENV
-        echo "${GITHUB_ENV}"
-        echo "${DOCKERFILE_URL}"
+      run: echo "DOCKERFILE_URL=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/blob/${GITHUB_REF##*/}/samples/dynamic-labels/Dockerfile" >> $GITHUB_ENV
     - name: 'Print some environment variables'
-      run: echo ${{ env.GITHUB_SERVER_URL }}
+      run: echo ${{ env.DOCKERFILE_URL }}
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@v2
     
@@ -39,7 +36,7 @@ jobs:
         tags: toddysm/tmstests:latest
         build-args: |
           IMAGE_COMMITTER=${{ github.actor }}
-          IMAGE_DOCKERFILE=https://github.com/${{ github.repository }}/blob/${{ github.head_ref }}/samples/dynamic-labels/Dockerfile
+          IMAGE_DOCKERFILE=${{ env.DOCKERFILE_URL }}
           IMAGE_COMMIT_SHA=${{ github.sha }}
 
     - name: Image digest
