@@ -20,7 +20,7 @@ name: Dynamic Docker Labels - DockerHub
 on:
   push:
     branches:
-      - feature/task1-docker-labels-gh-actions
+      - development
   pull_request:
     branches:
       - development
