@@ -20,7 +20,7 @@ name: Dynamic Docker Labels - DockerHub
 on:
   push:
     branches:
-      - development
+      - feature/task1-docker-labels-gh-actions
   pull_request:
     branches:
       - development
@@ -31,8 +31,13 @@ jobs:
     steps:
 
     # Builds the URL to the Dockerfile used to build the image
-    - name: 'Set environment variable for Dockerfile URL'
+    - name: 'Set environment variable for Dockerfile URL for push'
+      if: ${{ github.event == 'push' }}
       run: echo "DOCKERFILE_URL=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/blob/${GITHUB_REF#refs/*/}/samples/dynamic-labels/Dockerfile" >> $GITHUB_ENV
+
+    - name: 'Set environment variable for Dockerfile URL for pull request'
+      if: ${{ github.event == 'pull_request' }}
+      run: echo "DOCKERFILE_URL=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/blob/${GITHUB_BASE_REF#refs/*/}/samples/dynamic-labels/Dockerfile" >> $GITHUB_ENV
 
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@v2
