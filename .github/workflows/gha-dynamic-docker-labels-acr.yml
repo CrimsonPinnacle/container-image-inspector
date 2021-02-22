@@ -64,7 +64,7 @@ jobs:
         username: ${{ secrets.ACR_REGISTRY_USERNAME }}
         password: ${{ secrets.ACR_REGISTRY_PASSWORD }}
     - run: |
-        docker build -f ./samples/dynamic-labels/Dockerfile -t ${{ secrets.ACR_REGISTRY_LOGIN_SERVER }}/${{ secrets.ACR_REPOSITORY_NAME }}:build-${{ github.run_number }} --build-arg IMAGE_COMMITTER=${{ github.actor }} --build-arg IMAGE_DOCKERFILE=${{ env.DOCKERFILE_URL }} --build-arg IMAGE_COMMIT_SHA=${{ github.sha }}
+        docker build -f ./samples/dynamic-labels/Dockerfile -t ${{ secrets.ACR_REGISTRY_LOGIN_SERVER }}/${{ secrets.ACR_REPOSITORY_NAME }}:build-${{ github.run_number }} --build-arg IMAGE_COMMITTER=${{ github.actor }} --build-arg IMAGE_DOCKERFILE=${{ env.DOCKERFILE_URL }} --build-arg IMAGE_COMMIT_SHA=${{ github.sha }} .
         docker push ${{ secrets.ACR_REGISTRY_LOGIN_SERVER }}/${{ secrets.ACR_REPOSITORY_NAME }}:build-${{ github.run_number }}
 
     - name: Output image digest
