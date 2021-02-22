@@ -12,7 +12,7 @@
 # 3. Store your Azure credentials in GitHub Actions secrets named `AZURE_CREDENTIALS`. 
 #    For instructions on setting up secrets see: https://developer.github.com/actions/managing-workflows/storing-secrets/
 #
-# 4. Store the service principal application ID and application secret in GitHub Actions secrets named `ACR_REGISTRY_USERNAME` and `ACR_REGISTRY_SECRET`.
+# 4. Store the service principal application ID and application secret in GitHub Actions secrets named `ACR_REGISTRY_USERNAME` and `ACR_REGISTRY_PASSWORD`.
 #    For instructions on setting up secrets see: https://developer.github.com/actions/managing-workflows/storing-secrets/
 #
 # 5. Store the ACR login server inGitHub Actions secret named `ACR_REGISTRY_LOGIN_SERVER`.
