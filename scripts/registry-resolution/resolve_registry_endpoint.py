@@ -25,10 +25,20 @@ logging.basicConfig(handlers=[logging.FileHandler("registry-resolution.log"),
                               logging.StreamHandler()], format=_log_msg_format, level=_log_level)
 
 # RegEx for matching the docker distribution reference
-domain_regex = r"(?:[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]){1,63}(?:[.](?:[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]){1,63})+"
-repo_regex = r"/(?:[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9])(?:/[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9])*"
-tag_regex = r"[\w][\w.-]{0,127}"
-sha_regex = r"[A-Za-z][A-Za-z0-9]*(?:[-_+.][A-Za-z][A-Za-z0-9]*)*[:][[:xdigit:]]{32,}"
+_domain_regex_str = r"(?:[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]){1,63}(?:[.](?:[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]){1,63})+"
+_repo_regex_str = r"(?:[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9])(?:/[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9])*"
+_tag_regex_str = r"(?:[\w][\w.-]{0,127})"
+_sha_regex_str = r"(?:[A-Za-z][A-Za-z0-9]*(?:[-_+.][A-Za-z][A-Za-z0-9]*)*[:][[:xdigit:]]{32,})"
+_long_reference_regex_str = f"({_domain_regex_str})/({_repo_regex_str})(?:[:@])({_tag_regex_str}|{_sha_regex_str})"
+_short_reference_regex_str = f"({_repo_regex_str})(?:[:@])({_tag_regex_str}|{_sha_regex_str})"
+
+_long_reference_regex = re.compile(_long_reference_regex_str)
+_short_reference_regex = re.compile(_short_reference_regex_str)
+
+print(_long_reference_regex.match("mcr.microsoft.com/acr/test/hello-world:v1.0").groups())
+print(_long_reference_regex.match("mcr.microsoft.com/acr/test/hello-world@sha256:238f32f98492b75484d1f00f8cfb91deafd0d5b692ead87e2dadce9b718c1984").groups())
+print(_short_reference_regex.match("acr/test/hello-world:v1.0").groups())
+print(_short_reference_regex.match("acr/test/hello-world@sha256:238f32f98492b75484d1f00f8cfb91deafd0d5b692ead87e2dadce9b718c1984").groups())
 
 if __name__ == '__main__':
     """Resolves the container registry's endpoint DNS name and provides additional
