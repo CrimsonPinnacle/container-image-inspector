@@ -41,7 +41,8 @@ print(_reference_regex.match("acr/test/hello-world").groups())
 print(_reference_regex.match("hello-world").groups())
 
 if __name__ == '__main__':
-    """Resolves the container registry's endpoint DNS name and provides additional
+    """
+    Resolves the container registry's endpoint DNS name and provides additional
     details about the DNS.
 
     It prints the information on the console and logs it to a `registry-resolution.log`
