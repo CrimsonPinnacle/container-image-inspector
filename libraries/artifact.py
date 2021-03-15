@@ -62,7 +62,7 @@ class ArtifactReference:
         # The first item in the tuple is the registry endpoint
         return self.ref[0]
     
-    def get_repository(self):
+    def get_repository_name(self):
         """
         Returns the repository from the artifact refererence.
 
@@ -73,7 +73,7 @@ class ArtifactReference:
         # The second item in the tuple is the registry endpoint
         return self.ref[1]
 
-    def get_tag(self):
+    def get_image_tag(self):
         """
         Returns the tag from the artifact refererence.
 
@@ -84,7 +84,7 @@ class ArtifactReference:
         # The third item in the tuple is the registry endpoint
         return self.ref[2]
 
-    def get_sha(self):
+    def get_image_sha(self):
         """
         Returns the SHA from the artifact refererence.
 
