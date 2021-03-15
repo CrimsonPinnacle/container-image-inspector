@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 # Construct the root to add for import purposes
-project_path = Path(os.path.dirname(__file__)).parent
+project_path = Path(os.path.dirname(__file__)).absolute().parent
 sys.path.append(str(project_path))
 
 import unittest
