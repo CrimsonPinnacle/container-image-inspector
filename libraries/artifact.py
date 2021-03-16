@@ -53,7 +53,7 @@ class ArtifactReference:
     
     def get_registry_endpoint(self):
         """
-        Returns the registry endpoint from the artifact refererence.
+        Returns the registry endpoint from the artifact reference.
 
         :returns: The registry endpoint
         :rtype: string
