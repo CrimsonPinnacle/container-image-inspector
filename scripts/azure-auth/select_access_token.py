@@ -38,7 +38,7 @@ def pprint_token_info(access_tokens):
                     token['servicePrincipalTenant'], 'N/A'))
         if 'userId' in token:
             print("{:<5} {:<36} {:<36} {:<10}".format(counter, token['userId'], 
-                    token['identityProvider'], token['expiresOn']))
+                    token['identityProvider'] if 'identityProvider' in token else 'N/A', token['expiresOn']))
         
         counter += 1
 
