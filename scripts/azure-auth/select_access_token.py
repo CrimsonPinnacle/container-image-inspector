@@ -30,15 +30,15 @@ def pprint_token_info(access_tokens):
     :param access_tokens: The tenant identifier (GUID)
     :type access_tokens: List of dictionaries
     """
-    print("{:<5} {:<36} {:<36} {:<10}".format(' ', 'User', 'Provider/Tenant', 'Expires On'))
+    print("{:<5} {:<36} {:<36} {:<50} {:<10}".format(' ', 'User', 'Provider/Tenant', 'Resource', 'Expires On'))
     counter = 0
     for token in access_tokens:
         if 'servicePrincipalId' in token:
-            print("{:<5} {:<36} {:<36} {:<10}".format(counter, token['servicePrincipalId'],
-                    token['servicePrincipalTenant'], 'N/A'))
+            print("{:<5} {:<36} {:<36} {:<50} {:<10}".format(counter, token['servicePrincipalId'],
+                    token['servicePrincipalTenant'], token['resource'], 'N/A'))
         if 'userId' in token:
-            print("{:<5} {:<36} {:<36} {:<10}".format(counter, token['userId'], 
-                    token['identityProvider'] if 'identityProvider' in token else 'N/A', token['expiresOn']))
+            print("{:<5} {:<36} {:<36} {:<50} {:<10}".format(counter, token['userId'], 
+                   token['identityProvider'] if 'identityProvider' in token else token['oid'], token['resource'], token['expiresOn']))
         
         counter += 1
 
