@@ -20,8 +20,9 @@ from pathlib import Path
 # Configure logging
 _log_msg_format = "%(asctime)s [%(levelname)s]: %(message)s"
 _log_level = logging.ERROR
-logging.basicConfig(handlers=[logging.FileHandler("select-access-token.log"),
-                              logging.StreamHandler()], format=_log_msg_format, level=_log_level)
+logging.basicConfig(handlers=[logging.FileHandler("select-access-token.log")], 
+                    format=_log_msg_format, level=_log_level)
+logger = logging.getLogger()
 
 def pprint_token_info(access_tokens):
     """
@@ -73,6 +74,7 @@ if __name__ == '__main__':
 
     with open(args.file) as f:
         access_tokens = json.load(f)
+        logger.info(f"Loaded {len(access_tokens)} tokens from {args.file}")
 
     # Ask the user to select a token
     pprint_token_info(access_tokens)
@@ -83,6 +85,7 @@ if __name__ == '__main__':
             if selection >= len(access_tokens):
                 raise
         except:
+            logger.error(f"Invalid selection of token: {selection}")
             print(Fore.RED + f"Please select a number between 0 and {len(access_tokens) - 1}.")
 
     if 'servicePrincipalId' in access_tokens[selection]:
@@ -99,5 +102,6 @@ if __name__ == '__main__':
                 print(f"Returning refresh token for user: {access_tokens[selection]['userId']}")
                 print(access_tokens[selection]['refreshToken'])            
             else:
+                logger.error(f"Invalid selection of token type: {type_selection}")
                 print(Fore.RED + "Please select 'a' for access token or 'r' for refresh token.")
 
